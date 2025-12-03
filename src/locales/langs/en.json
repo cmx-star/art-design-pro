@@ -126,11 +126,8 @@
     },
     "placeholder": {
       "username": "Please enter your account",
-      "password": "Please enter your password",
-      "slider": "Please slide to verify"
+      "password": "Please enter your password"
     },
-    "sliderText": "Please slide to verify",
-    "sliderSuccessText": "Verification successful",
     "rememberPwd": "Remember password",
     "forgetPwd": "Forgot password",
     "btnText": "Login",
@@ -202,6 +199,10 @@
       "forbidden": "403",
       "notFound": "404",
       "serverError": "500"
+    },
+    "device": {
+      "title": "Device Management",
+      "port": "Port Management"
     },
     "system": {
       "title": "System Settings",

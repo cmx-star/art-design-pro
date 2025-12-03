@@ -85,6 +85,58 @@ declare namespace Api {
     }
   }
 
+  /** 设备管理类型 */
+  namespace Device {
+    /** 网口列表查询参数 */
+    interface PortListParams extends Common.PaginationParams {
+      /** 网口类型：wan/lan */
+      type?: 'wan' | 'lan'
+      /** 网口名称（模糊搜索） */
+      name?: string
+      /** 状态：up/down */
+      status?: 'up' | 'down'
+    }
+
+    /** 网口信息 */
+    interface PortInfo {
+      /** 网口ID */
+      id: string
+      /** 网口名称 */
+      name: string
+      /** 网口类型：wan/lan */
+      type: 'wan' | 'lan'
+      /** 状态：up/down */
+      status: 'up' | 'down'
+      /** MAC地址 */
+      mac: string
+      /** IP地址 */
+      ip?: string
+      /** 子网掩码 */
+      netmask?: string
+      /** 网关 */
+      gateway?: string
+      /** 速率（Mbps） */
+      speed?: number
+      /** 描述信息 */
+      description?: string
+      /** 创建时间 */
+      createTime?: string
+      /** 更新时间 */
+      updateTime?: string
+    }
+
+    /** 网口列表响应 */
+    type PortList = Common.PaginatedResponse<PortInfo>
+
+    /** 切换网口类型参数 */
+    interface SwitchPortTypeParams {
+      /** 网口ID */
+      id: string
+      /** 目标类型：wan/lan */
+      type: 'wan' | 'lan'
+    }
+  }
+
   /** 系统管理类型 */
   namespace SystemManage {
     /** 用户列表 */
