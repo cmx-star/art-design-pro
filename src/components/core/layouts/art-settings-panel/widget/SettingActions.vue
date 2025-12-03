@@ -70,26 +70,21 @@
     { comment: '菜单风格', key: 'menuThemeType', enumMap: ENUM_MAPS.menuTheme },
     { comment: '系统主题颜色', key: 'systemThemeColor' },
     { comment: '是否显示菜单按钮', key: 'showMenuButton' },
-    { comment: '是否显示快速入口', key: 'showFastEnter' },
     { comment: '是否显示刷新按钮', key: 'showRefreshButton' },
     { comment: '是否显示面包屑', key: 'showCrumbs' },
     { comment: '是否显示工作台标签', key: 'showWorkTab' },
     { comment: '是否显示语言切换', key: 'showLanguage' },
     { comment: '是否显示进度条', key: 'showNprogress' },
     { comment: '是否显示设置引导', key: 'showSettingGuide' },
-    { comment: '是否显示节日文本', key: 'showFestivalText' },
-    { comment: '是否显示水印', key: 'watermarkVisible' },
     { comment: '是否自动关闭', key: 'autoClose' },
     { comment: '是否唯一展开', key: 'uniqueOpened' },
     { comment: '是否色弱模式', key: 'colorWeak' },
     { comment: '是否刷新', key: 'refresh' },
-    { comment: '是否加载节日烟花', key: 'holidayFireworksLoaded' },
     { comment: '边框模式', key: 'boxBorderMode' },
     { comment: '页面过渡效果', key: 'pageTransition' },
     { comment: '标签页样式', key: 'tabStyle' },
     { comment: '自定义圆角', key: 'customRadius' },
-    { comment: '容器宽度', key: 'containerWidth', enumMap: ENUM_MAPS.containerWidth },
-    { comment: '节日日期', key: 'festivalDate', forceValue: '' }
+    { comment: '容器宽度', key: 'containerWidth', enumMap: ENUM_MAPS.containerWidth }
   ]
 
   /**
@@ -187,9 +182,6 @@
       toggleIfDifferent(settingStore.showMenuButton, config.showMenuButton, () =>
         settingStore.setButton()
       )
-      toggleIfDifferent(settingStore.showFastEnter, config.showFastEnter, () =>
-        settingStore.setFastEnter()
-      )
       toggleIfDifferent(settingStore.showRefreshButton, config.showRefreshButton, () =>
         settingStore.setShowRefreshButton()
       )
@@ -203,8 +195,6 @@
 
       // 界面显示（直接设置类方法）
       settingStore.setWorkTab(config.showWorkTab)
-      settingStore.setShowFestivalText(config.showFestivalText)
-      settingStore.setWatermarkVisible(config.watermarkVisible)
 
       // 功能设置
       toggleIfDifferent(settingStore.autoClose, config.autoClose, () => settingStore.setAutoClose())
@@ -221,10 +211,6 @@
       settingStore.setTabStyle(config.tabStyle)
       settingStore.setCustomRadius(config.customRadius)
       settingStore.setContainerWidth(config.containerWidth)
-
-      // 节日相关
-      settingStore.setFestivalDate(config.festivalDate)
-      settingStore.setholidayFireworksLoaded(config.holidayFireworksLoaded)
 
       location.reload()
     } catch (error) {

@@ -74,7 +74,7 @@
             :style="actionButtonsStyle"
           >
             <div class="flex gap-2 md:justify-center">
-              <ElButton v-if="showReset" class="reset-button" @click="handleReset" v-ripple>
+              <ElButton v-if="showReset" class="reset-button" @click="handleReset">
                 {{ t('table.form.reset') }}
               </ElButton>
               <ElButton
@@ -82,7 +82,6 @@
                 type="primary"
                 class="submit-button"
                 @click="handleSubmit"
-                v-ripple
                 :disabled="disabledSubmit"
               >
                 {{ t('table.form.submit') }}

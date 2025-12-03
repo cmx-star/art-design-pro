@@ -49,10 +49,6 @@
         </template>
       </ElDropdown>
 
-      <div v-if="shouldShow('fullscreen')" class="button" @click="toggleFullScreen">
-        <ArtSvgIcon :icon="isFullScreen ? 'ri:fullscreen-exit-line' : 'ri:fullscreen-line'" />
-      </div>
-
       <!-- 列设置 -->
       <ElPopover v-if="shouldShow('columns')" placement="bottom" trigger="click">
         <template #reference>
@@ -123,7 +119,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, onMounted, onUnmounted } from 'vue'
+  import { computed, ref } from 'vue'
   import { storeToRefs } from 'pinia'
   import { TableSizeEnum } from '@/enums/formEnum'
   import { useTableStore } from '@/store/modules/table'
@@ -158,7 +154,7 @@
     showBorder: true,
     showHeaderBackground: true,
     fullClass: 'art-page-view',
-    layout: 'search,refresh,size,fullscreen,columns,settings',
+    layout: 'search,refresh,size,columns,settings',
     showSearchBar: undefined
   })
 
@@ -256,66 +252,6 @@
 
   /** 是否手动点击刷新 */
   const isManualRefresh = ref(false)
-
-  /** 加载中 */
-  const isFullScreen = ref(false)
-
-  /** 保存原始的 overflow 样式，用于退出全屏时恢复 */
-  const originalOverflow = ref('')
-
-  /**
-   * 切换全屏状态
-   * 进入全屏时会隐藏页面滚动条，退出时恢复原状态
-   */
-  const toggleFullScreen = () => {
-    const el = document.querySelector(`.${props.fullClass}`)
-    if (!el) return
-
-    isFullScreen.value = !isFullScreen.value
-
-    if (isFullScreen.value) {
-      // 进入全屏：保存原始样式并隐藏滚动条
-      originalOverflow.value = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-      el.classList.add('el-full-screen')
-      tableStore.setIsFullScreen(true)
-    } else {
-      // 退出全屏：恢复原始样式
-      document.body.style.overflow = originalOverflow.value
-      el.classList.remove('el-full-screen')
-      tableStore.setIsFullScreen(false)
-    }
-  }
-
-  /**
-   * ESC键退出全屏的事件处理器
-   * 需要保存引用以便在组件卸载时正确移除监听器
-   */
-  const handleEscapeKey = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isFullScreen.value) {
-      toggleFullScreen()
-    }
-  }
-
-  /** 组件挂载时注册全局事件监听器 */
-  onMounted(() => {
-    document.addEventListener('keydown', handleEscapeKey)
-  })
-
-  /** 组件卸载时清理资源 */
-  onUnmounted(() => {
-    // 移除事件监听器
-    document.removeEventListener('keydown', handleEscapeKey)
-
-    // 如果组件在全屏状态下被卸载，恢复页面滚动状态
-    if (isFullScreen.value) {
-      document.body.style.overflow = originalOverflow.value
-      const el = document.querySelector(`.${props.fullClass}`)
-      if (el) {
-        el.classList.remove('el-full-screen')
-      }
-    }
-  })
 </script>
 
 <style scoped>

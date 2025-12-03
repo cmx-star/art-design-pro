@@ -9,9 +9,9 @@
       <p>已提交申请，等待部门审核。</p>
     </template>
     <template #buttons>
-      <ElButton type="primary" v-ripple>返回修改</ElButton>
-      <ElButton v-ripple>查看</ElButton>
-      <ElButton v-ripple>打印</ElButton>
+      <ElButton type="primary">返回修改</ElButton>
+      <ElButton>查看</ElButton>
+      <ElButton>打印</ElButton>
     </template>
   </ArtResultPage>
 </template>

@@ -71,7 +71,7 @@
         <ElCol :xs="24" :sm="24" :md="span" :lg="span" :xl="span" class="action-column">
           <div class="action-buttons-wrapper" :style="actionButtonsStyle">
             <div class="form-buttons">
-              <ElButton v-if="showReset" class="reset-button" @click="handleReset" v-ripple>
+              <ElButton v-if="showReset" class="reset-button" @click="handleReset">
                 {{ t('table.searchBar.reset') }}
               </ElButton>
               <ElButton
@@ -79,7 +79,6 @@
                 type="primary"
                 class="search-button"
                 @click="handleSearch"
-                v-ripple
                 :disabled="disabledSearch"
               >
                 {{ t('table.searchBar.search') }}

@@ -17,8 +17,8 @@
       </p>
     </template>
     <template #buttons>
-      <ElButton type="primary" v-ripple>返回修改</ElButton>
-      <ElButton v-ripple>查看</ElButton>
+      <ElButton type="primary">返回修改</ElButton>
+      <ElButton>查看</ElButton>
     </template>
   </ArtResultPage>
 </template>

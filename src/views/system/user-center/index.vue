@@ -5,10 +5,11 @@
       <div class="w-112 mr-5 max-md:w-full max-md:mr-0">
         <div class="art-card-sm relative p-9 pb-6 overflow-hidden text-center">
           <img class="absolute top-0 left-0 w-full h-50 object-cover" src="@imgs/user/bg.webp" />
-          <img
-            class="relative z-10 w-20 h-20 mt-30 mx-auto object-cover border-2 border-white rounded-full"
-            src="@imgs/user/avatar.webp"
-          />
+          <div
+            class="relative z-10 w-20 h-20 mt-30 mx-auto flex-cc border-2 border-white rounded-full bg-white/20"
+          >
+            <ArtSvgIcon icon="ri:user-3-line" class="text-3xl text-white" />
+          </div>
           <h2 class="mt-5 text-xl font-normal">{{ userInfo.userName }}</h2>
           <p class="mt-5 text-sm">专注于用户体验跟视觉设计</p>
 
@@ -96,7 +97,7 @@
             </ElFormItem>
 
             <div class="flex-c justify-end [&_.el-button]:!w-27.5">
-              <ElButton type="primary" class="w-22.5" v-ripple @click="edit">
+              <ElButton type="primary" class="w-22.5" @click="edit">
                 {{ isEdit ? '保存' : '编辑' }}
               </ElButton>
             </div>
@@ -135,7 +136,7 @@
             </ElFormItem>
 
             <div class="flex-c justify-end [&_.el-button]:!w-27.5">
-              <ElButton type="primary" class="w-22.5" v-ripple @click="editPwd">
+              <ElButton type="primary" class="w-22.5" @click="editPwd">
                 {{ isEditPwd ? '保存' : '编辑' }}
               </ElButton>
             </div>

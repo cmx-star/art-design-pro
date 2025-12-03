@@ -125,13 +125,6 @@ export function useSettingsConfig() {
         headerBarKey: 'menuButton' as const
       },
       {
-        key: 'showFastEnter',
-        label: t('setting.basics.list.fastEnter'),
-        type: 'switch' as const,
-        handler: 'fastEnter',
-        headerBarKey: 'fastEnter' as const
-      },
-      {
         key: 'showRefreshButton',
         label: t('setting.basics.list.reloadPage'),
         type: 'switch' as const,
@@ -165,13 +158,6 @@ export function useSettingsConfig() {
         label: t('setting.basics.list.weakMode'),
         type: 'switch' as const,
         handler: 'colorWeak',
-        headerBarKey: null // 不依赖headerBar配置
-      },
-      {
-        key: 'watermarkVisible',
-        label: t('setting.basics.list.watermark'),
-        type: 'switch' as const,
-        handler: 'watermark',
         headerBarKey: null // 不依赖headerBar配置
       },
       {

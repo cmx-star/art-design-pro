@@ -57,9 +57,6 @@
             :key="index"
             class="box-border flex-c px-3.5 py-3.5 c-p last:border-b-0 hover:bg-g-200/60"
           >
-            <div class="w-9 h-9">
-              <img :src="item.avatar" class="w-full h-full rounded-lg" />
-            </div>
             <div class="w-[calc(100%-45px)] ml-3.5">
               <h4 class="text-xs font-normal leading-5.5">{{ item.title }}</h4>
               <p class="mt-1.5 text-xs text-g-500">{{ item.time }}</p>
@@ -92,7 +89,7 @@
       </div>
 
       <div class="relative box-border w-full px-3.5">
-        <ElButton class="w-full mt-3" @click="handleViewAll" v-ripple>
+        <ElButton class="w-full mt-3" @click="handleViewAll">
           {{ $t('notice.viewAll') }}
         </ElButton>
       </div>
@@ -105,14 +102,6 @@
 <script setup lang="ts">
   import { computed, ref, watch, type Ref, type ComputedRef } from 'vue'
   import { useI18n } from 'vue-i18n'
-
-  // 导入头像图片
-  import avatar1 from '@/assets/images/avatar/avatar1.webp'
-  import avatar2 from '@/assets/images/avatar/avatar2.webp'
-  import avatar3 from '@/assets/images/avatar/avatar3.webp'
-  import avatar4 from '@/assets/images/avatar/avatar4.webp'
-  import avatar5 from '@/assets/images/avatar/avatar5.webp'
-  import avatar6 from '@/assets/images/avatar/avatar6.webp'
 
   defineOptions({ name: 'ArtNotification' })
 
@@ -130,8 +119,6 @@
     title: string
     /** 时间 */
     time: string
-    /** 头像 */
-    avatar: string
   }
 
   interface PendingItem {
@@ -210,33 +197,27 @@
     const msgList = ref<MessageItem[]>([
       {
         title: '池不胖 关注了你',
-        time: '2021-2-26 23:50',
-        avatar: avatar1
+        time: '2021-2-26 23:50'
       },
       {
         title: '唐不苦 关注了你',
-        time: '2021-2-21 8:05',
-        avatar: avatar2
+        time: '2021-2-21 8:05'
       },
       {
         title: '中小鱼 关注了你',
-        time: '2020-1-17 21:12',
-        avatar: avatar3
+        time: '2020-1-17 21:12'
       },
       {
         title: '何小荷 关注了你',
-        time: '2021-01-14 0:20',
-        avatar: avatar4
+        time: '2021-01-14 0:20'
       },
       {
         title: '誶誶淰 关注了你',
-        time: '2020-12-20 0:15',
-        avatar: avatar5
+        time: '2020-12-20 0:15'
       },
       {
         title: '冷月呆呆 关注了你',
-        time: '2020-12-17 22:06',
-        avatar: avatar6
+        time: '2020-12-17 22:06'
       }
     ])
 

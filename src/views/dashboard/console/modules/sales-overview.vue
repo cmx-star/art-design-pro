@@ -17,6 +17,8 @@
 </template>
 
 <script setup lang="ts">
+  defineOptions({ name: 'SalesOverview' })
+
   /**
    * 全年访问量数据
    * 记录每月的访问量统计

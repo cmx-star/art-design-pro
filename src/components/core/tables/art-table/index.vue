@@ -91,7 +91,7 @@
   const paginationRef = ref<HTMLElement>()
   const tableHeaderRef = ref<HTMLElement>()
   const tableStore = useTableStore()
-  const { isBorder, isZebra, tableSize, isFullScreen, isHeaderBackground } = storeToRefs(tableStore)
+  const { isBorder, isZebra, tableSize, isHeaderBackground } = storeToRefs(tableStore)
 
   /** 分页配置接口 */
   interface PaginationConfig {
@@ -231,8 +231,6 @@
 
   // 表格高度逻辑
   const height = computed(() => {
-    // 全屏模式下占满全屏
-    if (isFullScreen.value) return '100%'
     // 空数据且非加载状态时固定高度
     if (isEmpty.value && !props.loading) return props.emptyHeight
     // 使用传入的高度

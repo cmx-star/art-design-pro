@@ -23,6 +23,8 @@
 </template>
 
 <script setup lang="ts">
+  defineOptions({ name: 'ActiveUser' })
+
   interface UserStatItem {
     name: string
     num: string

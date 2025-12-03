@@ -24,6 +24,8 @@
 </template>
 
 <script setup lang="ts">
+  defineOptions({ name: 'CardList' })
+
   interface CardDataItem {
     des: string
     icon: string
