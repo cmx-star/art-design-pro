@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import viteCompression from 'vite-plugin-compression'
+// import viteCompression from 'vite-plugin-compression' // 已禁用压缩功能
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import ElementPlus from 'unplugin-element-plus/vite'
@@ -56,13 +56,65 @@ export default ({ mode }: { mode: string }) => {
           // 生产环境去除 console
           drop_console: true,
           // 生产环境去除 debugger
-          drop_debugger: true
+          drop_debugger: true,
+          // 移除未使用的代码
+          dead_code: true,
+          // 移除未使用的函数参数
+          unused: true,
+          // 移除未使用的变量
+          pure_funcs: ['console.log', 'console.info', 'console.debug'],
+          // 优化条件表达式
+          conditionals: true,
+          // 合并重复的变量声明
+          join_vars: true,
+          // 移除不必要的代码
+          passes: 2 // 多次压缩以获得更好的效果
+        },
+        format: {
+          // 移除注释
+          comments: false
         }
       },
       dynamicImportVarsOptions: {
         warnOnError: true,
         exclude: [],
         include: ['src/views/**/*.vue']
+      },
+      rollupOptions: {
+        output: {
+          // JS 文件分类到 assets/js/ 目录
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          // 资源文件分类
+          assetFileNames: (assetInfo) => {
+            const info = assetInfo.name?.split('.') || []
+            const ext = info[info.length - 1]
+            const name = assetInfo.name || ''
+
+            // CSS 文件分类到 assets/css/ 目录
+            if (/\.(css)$/i.test(name)) {
+              return `assets/css/[name]-[hash].${ext}`
+            }
+
+            // 图片文件分类到 assets/images/ 目录
+            if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico|webp|avif)$/i.test(name)) {
+              return `assets/images/[name]-[hash].${ext}`
+            }
+
+            // 字体文件分类到 assets/fonts/ 目录
+            if (/\.(woff2?|eot|ttf|otf)$/i.test(name)) {
+              return `assets/fonts/[name]-[hash].${ext}`
+            }
+
+            // 视频文件分类到 assets/videos/ 目录
+            if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)$/i.test(name)) {
+              return `assets/videos/[name]-[hash].${ext}`
+            }
+
+            // 其他资源文件放到 assets/ 目录
+            return `assets/[name]-[hash].${ext}`
+          }
+        }
       }
     },
     plugins: [
@@ -88,15 +140,26 @@ export default ({ mode }: { mode: string }) => {
       ElementPlus({
         useSource: true
       }),
-      // 压缩
-      viteCompression({
-        verbose: false, // 是否在控制台输出压缩结果
-        disable: false, // 是否禁用
-        algorithm: 'gzip', // 压缩算法
-        ext: '.gz', // 压缩后的文件名后缀
-        threshold: 10240, // 只有大小大于该值的资源会被处理 10240B = 10KB
-        deleteOriginFile: false // 压缩后是否删除原文件
-      }),
+      // 压缩功能已禁用（节省存储空间）
+      // viteCompression({
+      //   verbose: false,
+      //   disable: false,
+      //   algorithm: 'gzip',
+      //   ext: '.gz',
+      //   threshold: 10240,
+      //   deleteOriginFile: false
+      // }),
+      // viteCompression({
+      //   verbose: false,
+      //   disable: false,
+      //   algorithm: 'brotliCompress',
+      //   ext: '.br',
+      //   threshold: 10240,
+      //   deleteOriginFile: false,
+      //   compressionOptions: {
+      //     level: 11
+      //   }
+      // }),
       vueDevTools()
       // 打包分析
       // visualizer({
@@ -124,6 +187,7 @@ export default ({ mode }: { mode: string }) => {
       ]
     },
     css: {
+      // CSS 代码压缩（Vite 默认使用 esbuild 压缩，无需额外配置）
       preprocessorOptions: {
         // sass variable and mixin
         scss: {
