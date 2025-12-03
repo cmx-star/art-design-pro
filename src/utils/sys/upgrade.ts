@@ -8,8 +8,6 @@
  * - 版本号比较和升级检测
  * - 首次访问识别和处理
  * - 旧版本数据自动清理
- * - 升级日志展示和通知
- * - 强制重新登录控制（根据升级日志配置）
  * - 版本号规范化处理
  * - 旧存储结构迁移和清理
  * - 升级流程延迟执行（确保应用完全加载）
@@ -18,8 +16,6 @@
  *
  * - 应用启动时自动检测版本升级
  * - 版本更新后清理旧数据
- * - 向用户展示版本更新内容
- * - 重大更新时要求用户重新登录
  * - 防止旧版本数据污染新版本
  *
  * ## 工作流程
@@ -27,16 +23,11 @@
  * 1. 检查本地存储的版本号
  * 2. 与当前应用版本对比
  * 3. 查找并清理旧版本数据
- * 4. 展示升级通知（包含更新日志）
- * 5. 根据配置决定是否强制重新登录
- * 6. 更新本地版本号
+ * 4. 更新本地版本号
  *
  * @module utils/sys/upgrade
  * @author Art Design Pro Team
  */
-import { upgradeLogList } from '@/mock/upgrade/changeLog'
-import { ElNotification } from 'element-plus'
-import { useUserStore } from '@/store/modules/user'
 import { StorageConfig } from '@/utils/storage/storage-config'
 
 /**
@@ -112,56 +103,6 @@ class VersionManager {
   }
 
   /**
-   * 检查是否需要重新登录
-   */
-  private shouldRequireReLogin(storedVersion: string): boolean {
-    const normalizedCurrent = this.normalizeVersion(StorageConfig.CURRENT_VERSION)
-    const normalizedStored = this.normalizeVersion(storedVersion)
-
-    return upgradeLogList.value.some((item) => {
-      const itemVersion = this.normalizeVersion(item.version)
-      return (
-        item.requireReLogin && itemVersion > normalizedStored && itemVersion <= normalizedCurrent
-      )
-    })
-  }
-
-  /**
-   * 构建升级通知消息
-   */
-  private buildUpgradeMessage(requireReLogin: boolean): string {
-    const { title: content } = upgradeLogList.value[0]
-
-    const messageParts = [
-      `<p style="color: var(--art-gray-800) !important; padding-bottom: 5px;">`,
-      `系统已升级到 ${StorageConfig.CURRENT_VERSION} 版本，此次更新带来了以下改进：`,
-      `</p>`,
-      content
-    ]
-
-    if (requireReLogin) {
-      messageParts.push(
-        `<p style="color: var(--theme-color); padding-top: 5px;">升级完成，请重新登录后继续使用。</p>`
-      )
-    }
-
-    return messageParts.join('')
-  }
-
-  /**
-   * 显示升级通知
-   */
-  private showUpgradeNotification(message: string): void {
-    ElNotification({
-      title: '系统升级公告',
-      message,
-      duration: 0,
-      type: 'success',
-      dangerouslyUseHTMLString: true
-    })
-  }
-
-  /**
    * 清理旧版本数据
    */
   private cleanupLegacyData(oldSysKey: string | null, oldVersionKeys: string[]): void {
@@ -179,18 +120,6 @@ class VersionManager {
   }
 
   /**
-   * 执行升级后的登出操作
-   */
-  private performLogout(): void {
-    try {
-      useUserStore().logOut()
-      console.info('[Upgrade] 已执行升级后登出')
-    } catch (error) {
-      console.error('[Upgrade] 升级后登出失败:', error)
-    }
-  }
-
-  /**
    * 执行升级流程
    */
   private async executeUpgrade(
@@ -198,27 +127,11 @@ class VersionManager {
     legacyStorage: ReturnType<typeof this.findLegacyStorage>
   ): Promise<void> {
     try {
-      if (!upgradeLogList.value.length) {
-        console.warn('[Upgrade] 升级日志列表为空')
-        return
-      }
-
-      const requireReLogin = this.shouldRequireReLogin(storedVersion)
-      const message = this.buildUpgradeMessage(requireReLogin)
-
-      // 显示升级通知
-      this.showUpgradeNotification(message)
-
       // 更新版本号
       this.setStoredVersion(StorageConfig.CURRENT_VERSION)
 
       // 清理旧数据
       this.cleanupLegacyData(legacyStorage.oldSysKey, legacyStorage.oldVersionKeys)
-
-      // 执行登出（如果需要）
-      if (requireReLogin) {
-        this.performLogout()
-      }
 
       console.info(`[Upgrade] 升级完成: ${storedVersion} → ${StorageConfig.CURRENT_VERSION}`)
     } catch (error) {
