@@ -33,8 +33,6 @@ art-design-pro/
 │   │   │   │   ├── theme-animation.scss  # 主题切换动画
 │   │   │   │   ├── theme-change.scss     # 主题变化样式
 │   │   │   │   └── router-transition.scss # 路由过渡动画
-│   │   │   ├── custom/        # 自定义样式（业务级样式）
-│   │   │   │   └── one-dark-pro.scss      # One Dark Pro 主题样式
 │   │   │   └── index.scss     # 样式入口文件
 │   │   └── svg/               # SVG 相关资源
 │   │       └── loading.ts     # 加载动画 SVG 定义
@@ -75,8 +73,7 @@ art-design-pro/
 │   │       │   └── theme-svg/         # 主题 SVG 组件
 │   │       ├── views/        # 视图组件
 │   │       │   ├── exception/        # 异常页面组件（403、404、500）
-│   │       │   ├── login/             # 登录页面组件
-│   │       │   └── result/            # 结果页面组件（成功/失败）
+│   │       │   └── login/             # 登录页面组件
 │   │       └── widget/       # 小部件组件
 │   │           └── art-icon-button/   # 图标按钮组件
 │   │
@@ -238,9 +235,6 @@ art-design-pro/
 │       │   └── 500/          # 500 服务器错误页面
 │       ├── index/            # 首页
 │       │   └── index.vue     # 应用主页面（包含布局、菜单、内容区等）
-│       ├── result/           # 结果页面
-│       │   ├── success/      # 成功结果页面
-│       │   └── fail/         # 失败结果页面
 │       └── system/           # 系统管理页面
 │           ├── menu/         # 菜单管理页面
 │           ├── role/         # 角色管理页面
