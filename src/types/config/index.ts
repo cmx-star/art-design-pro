@@ -68,43 +68,6 @@ export interface SystemBasicConfig {
   copyright?: string
 }
 
-// 快速入口基础项
-export interface FastEnterBaseItem {
-  /** 名称 */
-  name: string
-  /** 是否启用 */
-  enabled?: boolean
-  /** 排序权重 */
-  order?: number
-  /** 路由名称 */
-  routeName?: string
-  /** 外部链接 */
-  link?: string
-}
-
-// 快速入口应用项
-export interface FastEnterApplication extends FastEnterBaseItem {
-  /** 应用描述 */
-  description: string
-  /** 图标代码 */
-  icon: string
-  /** 图标颜色 */
-  iconColor: string
-}
-
-// 快速链接项
-export type FastEnterQuickLink = FastEnterBaseItem
-
-// 快速入口配置
-export interface FastEnterConfig {
-  /** 应用列表 */
-  applications: FastEnterApplication[]
-  /** 快速链接 */
-  quickLinks: FastEnterQuickLink[]
-  /** 显示条件（屏幕宽度） */
-  minWidth?: number
-}
-
 // 系统配置
 export interface SystemConfig {
   // 系统基础信息
@@ -121,8 +84,6 @@ export interface SystemConfig {
   darkMenuStyles: MenuThemeType[]
   // 系统主色调
   systemMainColor: readonly string[]
-  // 快速入口配置
-  fastEnter?: FastEnterConfig
   // 顶部栏功能配置
   headerBar?: HeaderBarFeatureConfig
 }
