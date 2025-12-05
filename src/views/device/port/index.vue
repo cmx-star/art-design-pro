@@ -1,6 +1,19 @@
 <!-- 网口管理页面 -->
 <template>
   <div class="port-page art-full-height">
+    <!-- 面包屑导航 -->
+    <div v-if="deviceId" class="mb-4">
+      <ElBreadcrumb separator="/">
+        <ElBreadcrumbItem>
+          <ElButton type="primary" link @click="goBack">
+            <Icon icon="ri:arrow-left-line" class="mr-1" />
+            返回设备列表
+          </ElButton>
+        </ElBreadcrumbItem>
+        <ElBreadcrumbItem>网口管理 (设备ID: {{ deviceId }})</ElBreadcrumbItem>
+      </ElBreadcrumb>
+    </div>
+
     <!-- 搜索栏 -->
     <ArtSearchBar
       v-model="searchForm"
@@ -45,7 +58,16 @@
 <script setup lang="ts">
   import { useTable } from '@/hooks/core/useTable'
   import { fetchGetPortList, fetchSwitchPortType, type PortInfo } from '@/api/device'
-  import { ElTag, ElMessageBox, ElMessage, ElButton } from 'element-plus'
+  import {
+    ElTag,
+    ElMessageBox,
+    ElMessage,
+    ElButton,
+    ElBreadcrumb,
+    ElBreadcrumbItem
+  } from 'element-plus'
+  import { useRoute, useRouter } from 'vue-router'
+  import { Icon } from '@iconify/vue'
   import { h } from 'vue'
 
   defineOptions({ name: 'DevicePort' })
@@ -53,11 +75,17 @@
   // 选中行
   const selectedRows = ref<PortInfo[]>([])
 
+  // 获取路由参数中的设备ID
+  const route = useRoute()
+  const router = useRouter()
+  const deviceId = computed(() => route.query.deviceId as string)
+
   // 搜索表单
   const searchForm = ref({
     type: undefined as 'wan' | 'lan' | undefined,
     name: undefined,
-    status: undefined as 'up' | 'down' | undefined
+    status: undefined as 'up' | 'down' | undefined,
+    deviceId: deviceId.value // 添加设备ID到搜索参数
   })
 
   // 自动刷新定时器
@@ -211,7 +239,8 @@
     searchForm.value = {
       type: undefined,
       name: undefined,
-      status: undefined
+      status: undefined,
+      deviceId: deviceId.value
     }
     resetSearchParams()
     getData()
@@ -334,6 +363,13 @@
   onUnmounted(() => {
     stopAutoRefresh()
   })
+
+  /**
+   * 返回设备列表
+   */
+  const goBack = () => {
+    router.push({ name: 'DeviceList' })
+  }
 </script>
 
 <style lang="scss" scoped>

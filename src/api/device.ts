@@ -6,62 +6,14 @@ import { getMockPortList, mockSwitchPortType } from '@/mock/device/port'
  */
 const USE_MOCK = import.meta.env.DEV || import.meta.env.VITE_USE_MOCK === 'true'
 
-/**
- * 网口列表查询参数
- */
-export interface PortListParams extends Api.Common.PaginationParams {
-  /** 网口类型：wan/lan */
-  type?: 'wan' | 'lan'
-  /** 网口名称（模糊搜索） */
-  name?: string
-  /** 状态：up/down */
-  status?: 'up' | 'down'
-}
-
-/**
- * 网口信息
- */
-export interface PortInfo {
-  /** 网口ID */
-  id: string
-  /** 网口名称 */
-  name: string
-  /** 网口类型：wan/lan */
-  type: 'wan' | 'lan'
-  /** 状态：up/down */
-  status: 'up' | 'down'
-  /** MAC地址 */
-  mac: string
-  /** IP地址 */
-  ip?: string
-  /** 子网掩码 */
-  netmask?: string
-  /** 网关 */
-  gateway?: string
-  /** 速率（Mbps） */
-  speed?: number
-  /** 描述信息 */
-  description?: string
-  /** 创建时间 */
-  createTime?: string
-  /** 更新时间 */
-  updateTime?: string
-}
-
-/**
- * 网口列表响应
- */
-export type PortListResponse = Api.Common.PaginatedResponse<PortInfo>
-
-/**
- * 切换网口类型参数
- */
-export interface SwitchPortTypeParams {
-  /** 网口ID */
-  id: string
-  /** 目标类型：wan/lan */
-  type: 'wan' | 'lan'
-}
+// 使用全局类型定义
+export type PortListParams = Api.Device.PortListParams
+export type PortInfo = Api.Device.PortInfo
+export type PortListResponse = Api.Device.PortList
+export type SwitchPortTypeParams = Api.Device.SwitchPortTypeParams
+export type DeviceListParams = Api.Device.DeviceListParams
+export type DeviceInfo = Api.Device.DeviceInfo
+export type DeviceListResponse = Api.Device.DeviceList
 
 /**
  * 获取网口列表
@@ -93,5 +45,65 @@ export async function fetchSwitchPortType(
     url: '/api/device/port/switch-type',
     data: params,
     showSuccessMessage: true
+  })
+}
+
+/**
+ * 获取设备列表
+ */
+export async function fetchGetDeviceList(params: DeviceListParams): Promise<DeviceListResponse> {
+  if (USE_MOCK) {
+    // TODO: 实现设备列表的 Mock 数据
+    return {
+      records: [
+        {
+          id: '1',
+          name: '主路由器',
+          type: 'router',
+          status: 'online',
+          ip: '192.168.1.1',
+          mac: '00:11:22:33:44:55',
+          model: 'RT-AX86U',
+          portCount: 8,
+          description: '主要网络设备',
+          createTime: '2024-01-01 10:00:00',
+          updateTime: '2024-12-05 15:30:00'
+        },
+        {
+          id: '2',
+          name: '核心交换机',
+          type: 'switch',
+          status: 'online',
+          ip: '192.168.1.10',
+          mac: '00:11:22:33:44:66',
+          model: 'SG350-28',
+          portCount: 28,
+          description: '核心网络交换设备',
+          createTime: '2024-01-01 10:30:00',
+          updateTime: '2024-12-05 15:30:00'
+        },
+        {
+          id: '3',
+          name: '边界防火墙',
+          type: 'firewall',
+          status: 'offline',
+          ip: '192.168.1.20',
+          mac: '00:11:22:33:44:77',
+          model: 'ASA5506-X',
+          portCount: 6,
+          description: '网络安全防护设备',
+          createTime: '2024-01-01 11:00:00',
+          updateTime: '2024-12-05 15:30:00'
+        }
+      ],
+      total: 3,
+      current: params.current || 1,
+      size: params.size || 20
+    }
+  }
+
+  return request.get<DeviceListResponse>({
+    url: '/api/device/list',
+    params
   })
 }

@@ -135,6 +135,45 @@ declare namespace Api {
       /** 目标类型：wan/lan */
       type: 'wan' | 'lan'
     }
+
+    /** 设备列表查询参数 */
+    interface DeviceListParams extends Common.PaginationParams {
+      /** 设备名称（模糊搜索） */
+      name?: string
+      /** 设备类型 */
+      type?: string
+      /** 状态：online/offline */
+      status?: 'online' | 'offline'
+    }
+
+    /** 设备信息 */
+    interface DeviceInfo {
+      /** 设备ID */
+      id: string
+      /** 设备名称 */
+      name: string
+      /** 设备类型 */
+      type: 'router' | 'switch' | 'firewall'
+      /** 状态：online/offline */
+      status: 'online' | 'offline'
+      /** IP地址 */
+      ip: string
+      /** MAC地址 */
+      mac: string
+      /** 设备型号 */
+      model?: string
+      /** 网口数量 */
+      portCount?: number
+      /** 描述信息 */
+      description?: string
+      /** 创建时间 */
+      createTime?: string
+      /** 更新时间 */
+      updateTime?: string
+    }
+
+    /** 设备列表响应 */
+    type DeviceList = Common.PaginatedResponse<DeviceInfo>
   }
 
   /** 系统管理类型 */
