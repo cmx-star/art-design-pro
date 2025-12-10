@@ -42,9 +42,6 @@ art-design-pro/
 │   │       ├── base/         # 基础组件
 │   │       │   ├── art-logo/        # Logo 组件
 │   │       │   └── art-svg-icon/    # SVG 图标组件
-│   │       ├── charts/       # 图表组件
-│   │       │   ├── art-bar-chart/   # 柱状图组件
-│   │       │   └── art-line-chart/  # 折线图组件
 │   │       ├── forms/        # 表单组件
 │   │       │   ├── art-button-more/  # 更多按钮组件
 │   │       │   ├── art-button-table/ # 表格按钮组件
@@ -102,7 +99,6 @@ art-design-pro/
 │   │   ├── core/             # 核心 Hooks
 │   │   │   ├── useAppMode.ts      # 应用模式相关逻辑（开发/生产）
 │   │   │   ├── useAuth.ts         # 认证相关逻辑（登录、登出、权限检查）
-│   │   │   ├── useChart.ts        # 图表相关逻辑（ECharts 封装，生命周期、主题适配）
 │   │   │   ├── useCommon.ts       # 通用逻辑
 │   │   │   ├── useHeaderBar.ts    # 顶部栏逻辑
 │   │   │   ├── useLayoutHeight.ts # 布局高度计算逻辑
@@ -128,7 +124,6 @@ art-design-pro/
 │   │   └── upgrade/           # 更新日志数据（预留目录）
 │   │
 │   ├── plugins/              # 插件配置
-│   │   ├── echarts.ts        # ECharts 图表库配置（按需导入图表和组件）
 │   │   └── index.ts          # 插件入口文件
 │   │
 │   ├── router/               # Vue Router 路由相关代码
@@ -173,7 +168,6 @@ art-design-pro/
 │   │   │   ├── index.ts      # 通用类型入口
 │   │   │   └── response.ts   # 响应类型定义
 │   │   ├── component/        # 组件相关类型
-│   │   │   ├── chart.ts      # 图表组件类型
 │   │   │   └── index.ts      # 组件类型入口
 │   │   ├── config/           # 配置相关类型
 │   │   │   └── index.ts      # 配置类型定义
