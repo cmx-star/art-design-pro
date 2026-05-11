@@ -40,7 +40,7 @@
       <!-- 备案号 -->
       <div class="icp-number">
         <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-          鲁ICP备2025181732号-1
+          鲁ICP备2025181732号-2
         </a>
       </div>
     </div>
